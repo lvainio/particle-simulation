@@ -25,6 +25,10 @@ public class Particle {
         this.color = builder.color;
     }
 
+    public double removeThisMethod() {
+        return 555;
+    }
+
     public double getID() {
         return this.ID;
     }
