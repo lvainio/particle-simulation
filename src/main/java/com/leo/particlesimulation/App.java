@@ -11,9 +11,9 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-public class App extends Application {
+public final class App extends Application {
 
-   @Override
+    @Override
     public void start(Stage stage) {
         int width = 800;
         int height = 600;

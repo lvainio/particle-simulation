@@ -3,7 +3,7 @@ package com.leo.particlesimulation.simulation;
 import javafx.scene.paint.Color;
 
 public class Particle {
-    private final long ID;
+    private final long id;
     private double x;
     private double y;
     private double vx;
@@ -14,7 +14,7 @@ public class Particle {
     private Color color;
 
     private Particle(Builder builder) {
-        this.ID = builder.ID;
+        this.id = builder.id;
         this.x = builder.x;
         this.y = builder.y;
         this.vx = builder.vx;
@@ -29,8 +29,8 @@ public class Particle {
         return 555;
     }
 
-    public double getID() {
-        return this.ID;
+    public double getId() {
+        return this.id;
     }
 
     public double getX() {
@@ -66,7 +66,7 @@ public class Particle {
     }
 
     public static class Builder {
-        private final long ID;
+        private final long id;
         private double x = 0.0;
         private double y = 0.0;
         private double vx = 0.0;
@@ -76,8 +76,8 @@ public class Particle {
         private double restitution = 1.0;
         private Color color = Color.BLACK; 
 
-        public Builder(long ID) {
-            this.ID = ID;
+        public Builder(long id) {
+            this.id = id;
         }
 
         public Builder position(double x, double y) {
