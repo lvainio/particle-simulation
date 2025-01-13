@@ -1,14 +1,14 @@
 package com.leo.particlesimulation;
 
+import com.leo.particlesimulation.simulation.Particle;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 public class App extends Application {
@@ -17,30 +17,40 @@ public class App extends Application {
     public void start(Stage stage) {
         int width = 800;
         int height = 600;
-        
-        // Create a WritableImage (image buffer)
+
+        Particle p1 = new Particle.Builder(1)
+            .position(100, 100)
+            .velocity(5, 5)
+            .radius(60.0)
+            .color(Color.GRAY)
+            .build();
+
+        Particle p2 = new Particle.Builder(2)
+            .position(200, 400)
+            .radius(30.0)
+            .color(Color.MAGENTA)
+            .build();
+
+        Particle p3 = new Particle.Builder(2)
+            .position(400, 300)
+            .radius(100.0)
+            .color(Color.LIGHTBLUE)
+            .build();
+
+        Particle p4 = new Particle.Builder(2)
+            .position(500, 150)
+            .radius(40.0)
+            .color(Color.CHOCOLATE)
+            .build();
+
         WritableImage writableImage = new WritableImage(width, height);
         PixelWriter pixelWriter = writableImage.getPixelWriter();
 
-        // Fill the image with white color (background)
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                pixelWriter.setColor(x, y, Color.WHITE);
-            }
-        }
+        drawCircle(pixelWriter, (int) p1.getX(), (int) p1.getY(), (int) p1.getRadius(), p1.getColor(), width, height);
+        drawCircle(pixelWriter, (int) p2.getX(), (int) p2.getY(), (int) p2.getRadius(), p2.getColor(), width, height);
+        drawCircle(pixelWriter, (int) p3.getX(), (int) p3.getY(), (int) p3.getRadius(), p3.getColor(), width, height);
+        drawCircle(pixelWriter, (int) p4.getX(), (int) p4.getY(), (int) p4.getRadius(), p4.getColor(), width, height);
 
-        // Draw 1 million circles onto the buffer
-        for (int i = 0; i < 100; i++) {
-            // Random position for each circle
-            int x = (int) (Math.random() * width);
-            int y = (int) (Math.random() * height);
-            int radius = 4;
-
-            // Draw a circle onto the writable image using pixel manipulation
-            drawCircle(pixelWriter, x, y, radius, Color.GREEN, width, height);
-        }
-
-        // Create an ImageView to display the image
         ImageView imageView = new ImageView(writableImage);
 
         // Add ImageView to the scene
@@ -72,5 +82,4 @@ public class App extends Application {
     public static void main(String[] args) {
         launch();
     }
-
 }
