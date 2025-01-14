@@ -25,6 +25,8 @@ public class App extends Application {
                         .color(Color.GRAY)
                         .build();
 
+        System.out.println(p1);
+
         Particle p2 =
                 new Particle.Builder(2)
                         .position(200, 400)
