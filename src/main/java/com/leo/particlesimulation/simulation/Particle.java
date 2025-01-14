@@ -5,8 +5,7 @@ import javafx.scene.paint.Color;
 /**
  * Represents a particle in the simulation with properties such as position, velocity, mass, radius,
  * restitution, and color. The particle can interact with other particles and is part of a broader
- *
- * <p>simulation environment.
+ * simulation environment.
  *
  * @author Leo Vainio
  * @since 2024-01-14
