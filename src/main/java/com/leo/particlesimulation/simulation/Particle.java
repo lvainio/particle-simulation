@@ -72,9 +72,9 @@ public class Particle {
         private double vx = 0.0;
         private double vy = 0.0;
         private double mass = 1.0;
-        private double radius = 1.0; 
+        private double radius = 1.0;
         private double restitution = 1.0;
-        private Color color = Color.BLACK; 
+        private Color color = Color.BLACK;
 
         public Builder(long ID) {
             this.ID = ID;
