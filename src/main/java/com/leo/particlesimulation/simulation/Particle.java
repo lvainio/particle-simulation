@@ -5,13 +5,12 @@ import javafx.scene.paint.Color;
 /**
  * Represents a particle in the simulation with properties such as position, velocity, mass, radius,
  * restitution, and color. The particle can interact with other particles and is part of a broader
- *
- * <p>simulation environment.
+ * simulation environment.
  *
  * @author Leo Vainio
  * @since 2024-01-14
  */
-public class Particle {
+public class Particle implements SimulationObject {
     private final long id;
     private double x;
     private double y;
@@ -32,6 +31,13 @@ public class Particle {
         this.radius = builder.radius;
         this.restitution = builder.restitution;
         this.color = builder.color;
+    }
+
+    /** Updates the state of this particle based on its current velocity. */
+    @Override
+    public void update() {
+        this.x += this.vx;
+        this.y += this.vy;
     }
 
     /**
