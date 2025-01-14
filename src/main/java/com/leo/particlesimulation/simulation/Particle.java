@@ -10,7 +10,7 @@ import javafx.scene.paint.Color;
  * @author Leo Vainio
  * @since 2024-01-14
  */
-public class Particle {
+public class Particle implements SimulationObject {
     private final long id;
     private double x;
     private double y;
@@ -31,6 +31,13 @@ public class Particle {
         this.radius = builder.radius;
         this.restitution = builder.restitution;
         this.color = builder.color;
+    }
+
+    /** Updates the state of this particle based on its current velocity. */
+    @Override
+    public void update() {
+        this.x += this.vx;
+        this.y += this.vy;
     }
 
     /**
