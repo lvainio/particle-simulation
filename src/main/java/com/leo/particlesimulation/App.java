@@ -16,6 +16,7 @@ public class App extends Application {
         GraphicEngine graphicEngine = new GraphicEngine(stage);
 
         int numSteps = 10000;
+
         int delayMs = 1000 / 30;
 
         Timeline timeline = new Timeline();

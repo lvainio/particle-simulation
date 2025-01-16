@@ -14,6 +14,7 @@ public class SimulationEngine {
         double height = 800;
         Random rng = new Random();
         this.simulationObjects = new ArrayList<>();
+
         for (int i = 0; i < 100000; i++) {
             double x = rng.nextDouble() * width;
             double y = rng.nextDouble() * height;
