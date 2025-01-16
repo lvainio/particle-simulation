@@ -36,8 +36,32 @@ public class Particle implements SimulationObject {
     /** Updates the state of this particle based on its current velocity. */
     @Override
     public void update() {
+        double gravity = 9.8; // Gravitational acceleration in m/s^2
+
+        // Update the vertical velocity with gravity
+        this.vy += gravity; // Gravity affects vertical velocity
+
+        // Update the particle's position based on the velocity
         this.x += this.vx;
         this.y += this.vy;
+
+        // Boundary collision detection and response
+        if (this.x > 1000 - this.radius && this.vx > 0.0) {
+            this.x = 1000 - this.radius;
+            this.vx = -this.vx; // Bounce off the right side
+        }
+        if (this.y > 800 - this.radius && this.vy > 0.0) {
+            this.y = 800 - this.radius;
+            this.vy = -this.vy * this.restitution; // Apply restitution on vertical bounce
+        }
+        if (this.x < 0.0 + this.radius && this.vx < 0.0) {
+            this.x = 0.0 + this.radius;
+            this.vx = -this.vx; // Bounce off the left side
+        }
+        if (this.y < 0.0 + this.radius && this.vy < 0.0) {
+            this.y = 0.0 + this.radius;
+            this.vy = -this.vy * this.restitution; // Apply restitution on top boundary bounce
+        }
     }
 
     /**
@@ -141,6 +165,7 @@ public class Particle implements SimulationObject {
      *
      * @return the color of the particle
      */
+    @Override
     public Color getColor() {
         return this.color;
     }
