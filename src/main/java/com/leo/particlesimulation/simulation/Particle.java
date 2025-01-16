@@ -1,8 +1,6 @@
 package com.leo.particlesimulation.simulation;
 
-import javafx.scene.Node;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 
 /**
  * Represents a particle in the simulation with properties such as position, velocity, mass, radius,
@@ -22,7 +20,6 @@ public class Particle implements SimulationObject {
     private double radius;
     private double restitution;
     private Color color;
-    private Circle circle;
 
     private Particle(Builder builder) {
         this.id = builder.id;
@@ -34,7 +31,6 @@ public class Particle implements SimulationObject {
         this.radius = builder.radius;
         this.restitution = builder.restitution;
         this.color = builder.color;
-        this.circle = new Circle(this.x, this.y, this.radius, this.color);
     }
 
     /** Updates the state of this particle based on its current velocity. */
@@ -43,18 +39,18 @@ public class Particle implements SimulationObject {
         this.x += this.vx;
         this.y += this.vy;
 
-        this.circle.setCenterX(this.x);
-        this.circle.setCenterY(this.y);
-    }
-
-    /**
-     * Converts the simulation object to a graphical Node.
-     *
-     * @return the Node representation of this simulation object
-     */
-    @Override
-    public Node toNode() {
-        return this.circle;
+        if (this.x > 1000 && this.vx > 0.0) {
+            this.vx = -this.vx;
+        }
+        if (this.y > 800 && this.vy > 0.0) {
+            this.vy = -this.vy;
+        }
+        if (this.x < 0.0 && this.vx < 0.0) {
+            this.vx = -this.vx;
+        }
+        if (this.y < 0.0 && this.vy < 0.0) {
+            this.vy = -this.vy;
+        }
     }
 
     /**
@@ -158,6 +154,7 @@ public class Particle implements SimulationObject {
      *
      * @return the color of the particle
      */
+    @Override
     public Color getColor() {
         return this.color;
     }

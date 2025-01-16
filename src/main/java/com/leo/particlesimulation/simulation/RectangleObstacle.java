@@ -1,6 +1,5 @@
 package com.leo.particlesimulation.simulation;
 
-import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -25,11 +24,13 @@ public class RectangleObstacle implements SimulationObject {
     }
 
     @Override
-    public void update() {}
+    public void update() {
+        return;
+    }
 
     @Override
-    public Node toNode() {
-        return this.rectangle;
+    public Color getColor() {
+        return this.color;
     }
 
     public static class Builder {
