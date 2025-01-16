@@ -3,11 +3,15 @@ package com.leo.particlesimulation.graphic;
 import com.leo.particlesimulation.simulation.Particle;
 import com.leo.particlesimulation.simulation.SimulationObject;
 import java.util.List;
-import javafx.scene.Group;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class GraphicEngine {
@@ -19,16 +23,32 @@ public class GraphicEngine {
         int width = 1000;
         int height = 800;
 
-        Group root = new Group();
-
         this.canvas = new Canvas(width, height);
-        root.getChildren().add(this.canvas);
-
         this.gc = canvas.getGraphicsContext2D();
 
-        Scene scene = new Scene(root, width, height);
+        StackPane canvasWrapper = new StackPane();
+        canvasWrapper.setStyle("-fx-border-color: black; -fx-border-width: 1px;");
+        canvasWrapper.getChildren().add(canvas);
+        canvasWrapper.setPrefSize(width, height);
 
+        VBox controlPanel = new VBox(10);
+        controlPanel.setStyle(
+                "-fx-background-color: #f0f0f0; -fx-border-color: black; -fx-border-width: 1px;");
+        controlPanel.setPrefWidth(300);
+
+        controlPanel.getChildren().add(new Text("Control Panel"));
+        controlPanel.getChildren().add(new Text("Setting 1"));
+        controlPanel.getChildren().add(new Text("Setting 2"));
+
+        BorderPane root = new BorderPane();
+        root.setLeft(canvasWrapper);
+        root.setRight(controlPanel);
+
+        root.setPadding(new Insets(20));
+
+        Scene scene = new Scene(root, 1400, 840);
         stage.setTitle("Particle Simulation");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
@@ -44,7 +64,7 @@ public class GraphicEngine {
                     double radius = p.getRadius();
                     double x_adjusted = p.getX() - radius;
                     double y_adjusted = p.getY() - radius;
-                    this.gc.fillOval(x_adjusted, y_adjusted, radius, radius);
+                    this.gc.fillOval(x_adjusted, y_adjusted, radius * 2, radius * 2);
                 }
                 default -> System.out.println("INVALID SIMULATION OBJECT");
             }
