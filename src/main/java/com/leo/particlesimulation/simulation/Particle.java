@@ -38,6 +38,19 @@ public class Particle implements SimulationObject {
     public void update() {
         this.x += this.vx;
         this.y += this.vy;
+
+        if (this.x > 1000 && this.vx > 0.0) {
+            this.vx = -this.vx;
+        }
+        if (this.y > 800 && this.vy > 0.0) {
+            this.vy = -this.vy;
+        }
+        if (this.x < 0.0 && this.vx < 0.0) {
+            this.vx = -this.vx;
+        }
+        if (this.y < 0.0 && this.vy < 0.0) {
+            this.vy = -this.vy;
+        }
     }
 
     /**
@@ -141,6 +154,7 @@ public class Particle implements SimulationObject {
      *
      * @return the color of the particle
      */
+    @Override
     public Color getColor() {
         return this.color;
     }
