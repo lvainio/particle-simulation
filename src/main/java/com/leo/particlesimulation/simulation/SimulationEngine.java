@@ -29,9 +29,9 @@ public class SimulationEngine {
                     new Particle.Builder(i)
                             .position(x, y)
                             .velocity(vx, vy)
-                            .radius(300.0)
+                            .radius(rng.nextDouble() * 10 + 2)
                             .mass(1.0)
-                            .restitution(0.95)
+                            .restitution(0.8)
                             .color(Color.rgb(r, g, b))
                             .build();
 
