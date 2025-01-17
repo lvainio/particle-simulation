@@ -36,31 +36,61 @@ public class Particle implements SimulationObject {
     /** Updates the state of this particle based on its current velocity. */
     @Override
     public void update() {
-        double gravity = 9.8; // Gravitational acceleration in m/s^2
+        double dt = 0.01;
 
-        // Update the vertical velocity with gravity
-        this.vy += gravity; // Gravity affects vertical velocity
+        double gravity = 9.8;
+        this.vy += gravity;
 
-        // Update the particle's position based on the velocity
-        this.x += this.vx;
-        this.y += this.vy;
+        double dx = this.vx * dt;
+        double dy = this.vy * dt;
+        boolean collidesWithLeftWallDuringTimeStep = (this.x - this.radius) + dx < 0.0;
+        boolean collidesWithRightWallDuringTimeStep = (this.x + this.radius) + dx > 1000.0;
 
-        // Boundary collision detection and response
-        if (this.x > 1000 - this.radius && this.vx > 0.0) {
-            this.x = 1000 - this.radius;
-            this.vx = -this.vx; // Bounce off the right side
+        if (collidesWithLeftWallDuringTimeStep) {
+            double dx1 = this.x - this.radius;
+            double t1 = -dx1 / this.vx;
+            double t2 = dt - t1;
+            this.vx = -this.vx * this.restitution;
+            this.vy = this.vy * this.restitution;
+            double dx2 = t2 * this.vx;
+            this.x = this.radius + dx2;
+
+        } else if (collidesWithRightWallDuringTimeStep) {
+            double dx1 = 1000.0 - this.x - this.radius;
+            double t1 = dx1 / this.vx;
+            double t2 = dt - t1;
+            this.vx = -this.vx * this.restitution;
+            this.vy = this.vy * this.restitution;
+            double dx2 = -t2 * this.vx;
+            this.x = 1000.0 - this.radius - dx2;
+
+        } else {
+            this.x += dx;
         }
-        if (this.y > 800 - this.radius && this.vy > 0.0) {
-            this.y = 800 - this.radius;
-            this.vy = -this.vy * this.restitution; // Apply restitution on vertical bounce
-        }
-        if (this.x < 0.0 + this.radius && this.vx < 0.0) {
-            this.x = 0.0 + this.radius;
-            this.vx = -this.vx; // Bounce off the left side
-        }
-        if (this.y < 0.0 + this.radius && this.vy < 0.0) {
-            this.y = 0.0 + this.radius;
-            this.vy = -this.vy * this.restitution; // Apply restitution on top boundary bounce
+
+        boolean collidesWithTopWallDuringTimeStep = (this.y - this.radius) + dy < 0.0;
+        boolean collidesWithBottomWallDuringTimeStep = (this.y + this.radius) + dy > 800.0;
+
+        if (collidesWithTopWallDuringTimeStep) {
+            double dy1 = this.y - this.radius;
+            double t1 = -dy1 / this.vy;
+            double t2 = dt - t1;
+            this.vx = this.vx * this.restitution;
+            this.vy = -this.vy * this.restitution;
+            double dy2 = t2 * this.vy;
+            this.y = this.radius + dy2;
+
+        } else if (collidesWithBottomWallDuringTimeStep) {
+            double dy1 = 800.0 - this.y - this.radius;
+            double t1 = dy1 / this.vy;
+            double t2 = dt - t1;
+            this.vx = this.vx * this.restitution;
+            this.vy = -this.vy * this.restitution;
+            double dy2 = -t2 * this.vy;
+            this.y = 800.0 - this.radius - dy2;
+
+        } else {
+            this.y += dy;
         }
     }
 

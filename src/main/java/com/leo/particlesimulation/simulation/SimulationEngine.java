@@ -15,11 +15,11 @@ public class SimulationEngine {
         Random rng = new Random();
         this.simulationObjects = new ArrayList<>();
 
-        for (int i = 0; i < 100000; i++) {
+        for (int i = 0; i < 100; i++) {
             double x = rng.nextDouble() * width;
             double y = rng.nextDouble() * height;
-            double vx = rng.nextDouble() * 5 + 1.0;
-            double vy = rng.nextDouble() * 5 + 1.0;
+            double vx = rng.nextDouble() * 500.0 - 250.0;
+            double vy = rng.nextDouble() * 500.0 - 250.0;
 
             int r = rng.nextInt(256);
             int g = rng.nextInt(256);
@@ -29,9 +29,9 @@ public class SimulationEngine {
                     new Particle.Builder(i)
                             .position(x, y)
                             .velocity(vx, vy)
-                            .radius(3.0)
+                            .radius(300.0)
                             .mass(1.0)
-                            .restitution(0.9)
+                            .restitution(0.95)
                             .color(Color.rgb(r, g, b))
                             .build();
 

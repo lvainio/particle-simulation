@@ -64,7 +64,7 @@ public class GraphicEngine {
                     double radius = p.getRadius();
                     double x_adjusted = p.getX() - radius;
                     double y_adjusted = p.getY() - radius;
-                    this.gc.fillOval(x_adjusted, y_adjusted, radius * 2, radius * 2);
+                    this.gc.fillOval(x_adjusted, y_adjusted, radius * 2.0, radius * 2.0);
                 }
                 default -> System.out.println("INVALID SIMULATION OBJECT");
             }
