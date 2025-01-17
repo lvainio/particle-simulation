@@ -2,35 +2,41 @@ package com.leo.particlesimulation;
 
 import com.leo.particlesimulation.graphic.GraphicEngine;
 import com.leo.particlesimulation.simulation.SimulationEngine;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
-public class App extends Application {
+public final class App extends Application {
 
     @Override
     public void start(Stage stage) {
         SimulationEngine simulationEngine = new SimulationEngine();
         GraphicEngine graphicEngine = new GraphicEngine(stage);
 
-        int numSteps = 10000;
+        AnimationTimer timer =
+                new AnimationTimer() {
+                    private long lastUpdate = 0;
+                    private int stepCount = 0;
+                    private final int numSteps = 10000;
 
-        int delayMs = 1000 / 30;
+                    @Override
+                    public void handle(long now) {
+                        if (lastUpdate == 0) {
+                            lastUpdate = now;
+                            return;
+                        }
 
-        Timeline timeline = new Timeline();
-        timeline.setCycleCount(numSteps);
-        timeline.getKeyFrames()
-                .add(
-                        new KeyFrame(
-                                Duration.millis(delayMs),
-                                e -> {
-                                    simulationEngine.step();
-                                    graphicEngine.drawSimulationObjects(
-                                            simulationEngine.getSimulationObjects());
-                                }));
-        timeline.play();
+                        simulationEngine.step();
+                        graphicEngine.drawSimulationObjects(
+                                simulationEngine.getSimulationObjects());
+
+                        stepCount++;
+                        if (stepCount >= numSteps) {
+                            this.stop();
+                        }
+                    }
+                };
+        timer.start();
     }
 
     public static void main(String[] args) {
