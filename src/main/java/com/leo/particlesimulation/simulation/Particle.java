@@ -11,7 +11,16 @@ import javafx.scene.paint.Color;
  * @since 2024-01-14
  */
 public class Particle implements SimulationObject {
-    private final long id;
+    private static final double DEFAULT_X = 5.0;
+    private static final double DEFAULT_Y = 5.0;
+    private static final double DEFAULT_VX = 0.0;
+    private static final double DEFAULT_VY = 0.0;
+    private static final double DEFAULT_MASS = 1.0;
+    private static final double DEFAULT_RADIUS = 5.0;
+    private static final double DEFAULT_RESTITUTION = 0.8;
+    private static final Color DEFAULT_COLOR = Color.BLACK;
+
+    private final int id;
     private double x;
     private double y;
     private double vx;
@@ -36,7 +45,7 @@ public class Particle implements SimulationObject {
     /** Updates the state of this particle based on its current velocity. */
     @Override
     public void update() {
-        double dt = 0.1;
+        double dt = 0.01;
 
         double gravity = 9.8;
         this.vy += gravity * dt;
@@ -99,7 +108,7 @@ public class Particle implements SimulationObject {
      *
      * @return the unique identifier of the particle
      */
-    public double getId() {
+    public int getId() {
         return this.id;
     }
 
@@ -229,26 +238,26 @@ public class Particle implements SimulationObject {
      *
      * <p>This builder allows for a flexible and fluent way to construct a Particle object, setting
      * various properties like position, velocity, mass, radius, restitution, and color. The builder
-     * ensures that the required fields are set, and it provides sensible defaults for optional
-     * fields.
+     * ensures that the required fields are set, and tries to provide sensible defaults for all
+     * unset fields.
      */
     public static class Builder {
-        private final long id;
-        private double x = 0.0;
-        private double y = 0.0;
-        private double vx = 0.0;
-        private double vy = 0.0;
-        private double mass = 1.0;
-        private double radius = 1.0;
-        private double restitution = 1.0;
-        private Color color = Color.BLACK;
+        private final int id;
+        private double x = DEFAULT_X;
+        private double y = DEFAULT_Y;
+        private double vx = DEFAULT_VX;
+        private double vy = DEFAULT_VY;
+        private double mass = DEFAULT_MASS;
+        private double radius = DEFAULT_RADIUS;
+        private double restitution = DEFAULT_RESTITUTION;
+        private Color color = DEFAULT_COLOR;
 
         /**
          * Creates a new Builder instance for a Particle with a specified id.
          *
          * @param id the unique identifier for the Particle
          */
-        public Builder(long id) {
+        public Builder(int id) {
             this.id = id;
         }
 
