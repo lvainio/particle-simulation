@@ -36,10 +36,10 @@ public class Particle implements SimulationObject {
     /** Updates the state of this particle based on its current velocity. */
     @Override
     public void update() {
-        double dt = 0.01;
+        double dt = 0.1;
 
         double gravity = 9.8;
-        this.vy += gravity;
+        this.vy += gravity * dt;
 
         double dx = this.vx * dt;
         double dy = this.vy * dt;
