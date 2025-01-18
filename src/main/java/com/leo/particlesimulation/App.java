@@ -1,6 +1,7 @@
 package com.leo.particlesimulation;
 
 import com.leo.particlesimulation.graphic.GraphicEngine;
+import com.leo.particlesimulation.simulation.SimulationConfig;
 import com.leo.particlesimulation.simulation.SimulationEngine;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -10,8 +11,17 @@ public final class App extends Application {
 
     @Override
     public void start(Stage stage) {
-        SimulationEngine simulationEngine = new SimulationEngine();
-        GraphicEngine graphicEngine = new GraphicEngine(stage);
+
+        SimulationConfig simulationConfig =
+                new SimulationConfig.Builder()
+                        .setDt(0.1)
+                        .setGravity(9.82)
+                        .setWidth(800)
+                        .setHeight(600)
+                        .build();
+
+        SimulationEngine simulationEngine = new SimulationEngine(simulationConfig);
+        GraphicEngine graphicEngine = new GraphicEngine(stage, simulationConfig);
 
         AnimationTimer timer =
                 new AnimationTimer() {

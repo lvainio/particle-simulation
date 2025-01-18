@@ -35,16 +35,13 @@ public class Particle implements SimulationObject {
 
     /** Updates the state of this particle based on its current velocity. */
     @Override
-    public void update() {
-        double dt = 0.1;
-
-        double gravity = 9.8;
+    public void update(double dt, double gravity, double width, double height) {
         this.vy += gravity * dt;
 
         double dx = this.vx * dt;
         double dy = this.vy * dt;
         boolean collidesWithLeftWallDuringTimeStep = (this.x - this.radius) + dx < 0.0;
-        boolean collidesWithRightWallDuringTimeStep = (this.x + this.radius) + dx > 1000.0;
+        boolean collidesWithRightWallDuringTimeStep = (this.x + this.radius) + dx > width;
 
         if (collidesWithLeftWallDuringTimeStep) {
             double dx1 = this.x - this.radius;
@@ -56,20 +53,20 @@ public class Particle implements SimulationObject {
             this.x = this.radius + dx2;
 
         } else if (collidesWithRightWallDuringTimeStep) {
-            double dx1 = 1000.0 - this.x - this.radius;
+            double dx1 = width - this.x - this.radius;
             double t1 = dx1 / this.vx;
             double t2 = dt - t1;
             this.vx = -this.vx * this.restitution;
             this.vy = this.vy * this.restitution;
             double dx2 = -t2 * this.vx;
-            this.x = 1000.0 - this.radius - dx2;
+            this.x = width - this.radius - dx2;
 
         } else {
             this.x += dx;
         }
 
         boolean collidesWithTopWallDuringTimeStep = (this.y - this.radius) + dy < 0.0;
-        boolean collidesWithBottomWallDuringTimeStep = (this.y + this.radius) + dy > 800.0;
+        boolean collidesWithBottomWallDuringTimeStep = (this.y + this.radius) + dy > height;
 
         if (collidesWithTopWallDuringTimeStep) {
             double dy1 = this.y - this.radius;
@@ -81,16 +78,24 @@ public class Particle implements SimulationObject {
             this.y = this.radius + dy2;
 
         } else if (collidesWithBottomWallDuringTimeStep) {
-            double dy1 = 800.0 - this.y - this.radius;
+            double dy1 = height - this.y - this.radius;
             double t1 = dy1 / this.vy;
             double t2 = dt - t1;
             this.vx = this.vx * this.restitution;
             this.vy = -this.vy * this.restitution;
             double dy2 = -t2 * this.vy;
-            this.y = 800.0 - this.radius - dy2;
+            this.y = height - this.radius - dy2;
 
         } else {
             this.y += dy;
+        }
+
+        double threshold = 1e-3;
+        if (Math.abs(this.vx) < threshold) {
+            this.vx = 0.0;
+        }
+        if (Math.abs(this.vy) < threshold) {
+            this.vy = 0.0;
         }
     }
 

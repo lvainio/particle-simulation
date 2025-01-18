@@ -1,6 +1,7 @@
 package com.leo.particlesimulation.graphic;
 
 import com.leo.particlesimulation.simulation.Particle;
+import com.leo.particlesimulation.simulation.SimulationConfig;
 import com.leo.particlesimulation.simulation.SimulationObject;
 import java.util.List;
 import javafx.geometry.Insets;
@@ -19,9 +20,9 @@ public class GraphicEngine {
     private Canvas canvas;
     private GraphicsContext gc;
 
-    public GraphicEngine(Stage stage) {
-        int width = 1000;
-        int height = 800;
+    public GraphicEngine(Stage stage, SimulationConfig simulationConfig) {
+        double width = simulationConfig.getWidth();
+        double height = simulationConfig.getHeight();
 
         this.canvas = new Canvas(width, height);
         this.gc = canvas.getGraphicsContext2D();
@@ -46,7 +47,7 @@ public class GraphicEngine {
 
         root.setPadding(new Insets(20));
 
-        Scene scene = new Scene(root, 1400, 840);
+        Scene scene = new Scene(root, width + 400, height + 40);
         stage.setTitle("Particle Simulation");
         stage.setResizable(false);
         stage.setScene(scene);

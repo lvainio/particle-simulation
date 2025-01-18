@@ -18,6 +18,22 @@ public class SimulationConfig {
         this.height = builder.height;
     }
 
+    public double getDt() {
+        return this.dt;
+    }
+
+    public double getGravity() {
+        return this.gravity;
+    }
+
+    public double getWidth() {
+        return this.width;
+    }
+
+    public double getHeight() {
+        return this.height;
+    }
+
     public static class Builder {
         private double dt = DEFAULT_DT;
         private double gravity = DEFAULT_GRAVITY;
