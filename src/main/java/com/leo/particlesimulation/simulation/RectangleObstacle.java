@@ -24,7 +24,7 @@ public class RectangleObstacle implements SimulationObject {
     }
 
     @Override
-    public void update() {
+    public void update(double dt, double gravity, double width, double height) {
         return;
     }
 

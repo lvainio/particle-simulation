@@ -7,15 +7,17 @@ import javafx.scene.paint.Color;
 
 public class SimulationEngine {
 
+    private SimulationConfig simulationConfig;
     private List<SimulationObject> simulationObjects;
 
-    public SimulationEngine() {
-        double width = 1000;
-        double height = 800;
+    public SimulationEngine(SimulationConfig simulationConfig) {
+        double width = simulationConfig.getWidth();
+        double height = simulationConfig.getHeight();
         Random rng = new Random();
         this.simulationObjects = new ArrayList<>();
+        this.simulationConfig = simulationConfig;
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 5; i++) {
             double x = rng.nextDouble() * width;
             double y = rng.nextDouble() * height;
             double vx = rng.nextDouble() * 500.0 - 250.0;
@@ -40,8 +42,13 @@ public class SimulationEngine {
     }
 
     public void step() {
+        double dt = simulationConfig.getDt();
+        double gravity = simulationConfig.getGravity();
+        double width = simulationConfig.getWidth();
+        double height = simulationConfig.getHeight();
+
         for (SimulationObject so : this.simulationObjects) {
-            so.update();
+            so.update(dt, gravity, width, height);
         }
     }
 
